@@ -16,6 +16,9 @@ $(document).ready(function () {
 
   var showOtherStream = function (stream) {
     $('#other-video').prop('src', URL.createObjectURL(stream));
+    $('#calling').hide();
+    $('#catch').hide();
+    $('.disconnect').show();
   };
 
   var phone = (function () {
@@ -26,6 +29,9 @@ $(document).ready(function () {
     return {
       start: function () {
         $('#call-box').show();
+        $('#call').show();
+        $('#calling').hide();
+
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
           $('#video').prop('src', URL.createObjectURL(stream));
           myStream = stream;
@@ -51,6 +57,10 @@ $(document).ready(function () {
       call: function (id) {
         var call = peer.call(id, myStream);
         call.on('stream', showOtherStream);
+
+        $('#call-box').show();
+        $('#call').hide();
+        $('#calling').show();
       },
       answer: function () {
         call.answer(myStream);
