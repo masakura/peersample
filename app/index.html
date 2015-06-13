@@ -22,12 +22,21 @@
     <![endif]-->
 
     <div class="container">
-      <video id="video" autoplay></video>
+      <video id="video" autoplay muted></video>
+      <video id="other-video" autoplay></video>
+      <div class="input-group">
+        <input id="other-peerid" type="text" class="form-control">
+        <span class="input-group-btn">
+          <button id="call" type="button" class="btn btn-primary">Call</button>
+        </span>
+      </div>
+      <div id="messages"></div>
     </div>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/peerjs/peer.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -48,6 +57,6 @@
 
     <!-- build:js({app,.tmp}) scripts/main.js -->
     <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+    <!-- endbuild -->
   </body>
 </html>
