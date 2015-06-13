@@ -1,3 +1,5 @@
+var app = app || {};
+
 (function () {
   'use strict';
 
@@ -5,6 +7,46 @@
     navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
+
+})();
+
+app.view = (function () {
+  'use strict';
+
+  return {
+    waiting: function () {
+      $('#call-box').show();
+      $('#catch-box').hide();
+
+      $('#call').show();
+      $('#calling').hide();
+      $('.disconnect').hide();
+    },
+    calling: function () {
+      $('#call-box').show();
+      $('#catch-box').hide();
+
+      $('#call').hide();
+      $('#calling').show();
+      $('.disconnect').hide();
+    },
+    catching: function (id) {
+      $('#call-box').hide();
+      $('#catch-box').show();
+
+      $('#catch').show();
+      $('.disconnect').hide();
+
+      $('#catch-other-peerid').val(id);
+    },
+    talking: function () {
+      $('#call-box').hide();
+      $('#catch-box').show();
+
+      $('#catch').hide();
+      $('.disconnect').show();
+    }
+  };
 })();
 
 $(document).ready(function () {
@@ -16,20 +58,14 @@ $(document).ready(function () {
 
   var showOtherStream = function (stream) {
     $('#other-video').prop('src', URL.createObjectURL(stream));
-    $('#calling').hide();
-    $('#catch').hide();
-    $('.disconnect').show();
+
+    app.view.talking();
   };
 
   var hideOtherStream = function () {
     $('#other-video').prop('src', '');
-    $('#call-box').show();
-    $('#call').show();
-    $('#calling').hide();
-    $('.disconnect').hide();
-    $('#catch-box').hide();
 
-    log('close');
+    app.view.waiting();
   };
 
   var phone = (function () {
@@ -39,10 +75,6 @@ $(document).ready(function () {
 
     return {
       start: function () {
-        $('#call-box').show();
-        $('#call').show();
-        $('#calling').hide();
-
         navigator.getUserMedia({audio: false, video: true}, function (stream) {
           $('#video').prop('src', URL.createObjectURL(stream));
           myStream = stream;
@@ -64,15 +96,15 @@ $(document).ready(function () {
           $('#call-box').hide();
           $('#catch-box').show();
         }.bind(this));
+
+        app.view.waiting();
       },
       call: function (id) {
         call = peer.call(id, myStream);
         call.on('stream', showOtherStream);
         call.on('close', hideOtherStream);
 
-        $('#call-box').show();
-        $('#call').hide();
-        $('#calling').show();
+        app.view.calling();
       },
       answer: function () {
         call.answer(myStream);
