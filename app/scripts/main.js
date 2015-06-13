@@ -21,6 +21,17 @@ $(document).ready(function () {
     $('.disconnect').show();
   };
 
+  var hideOtherStream = function () {
+    $('#other-video').prop('src', '');
+    $('#call-box').show();
+    $('#call').show();
+    $('#calling').hide();
+    $('.disconnect').hide();
+    $('#catch-box').hide();
+
+    log('close');
+  };
+
   var phone = (function () {
     var myStream;
     var peer;
@@ -55,8 +66,9 @@ $(document).ready(function () {
         }.bind(this));
       },
       call: function (id) {
-        var call = peer.call(id, myStream);
+        call = peer.call(id, myStream);
         call.on('stream', showOtherStream);
+        call.on('close', hideOtherStream);
 
         $('#call-box').show();
         $('#call').hide();
@@ -65,6 +77,10 @@ $(document).ready(function () {
       answer: function () {
         call.answer(myStream);
         call.on('stream', showOtherStream);
+        call.on('close', hideOtherStream);
+      },
+      disconnect: function () {
+        call.close();
       }
     };
   })();
@@ -77,5 +93,8 @@ $(document).ready(function () {
     })
     .on('click', '#catch', function () {
       phone.answer();
+    })
+    .on('click', '.disconnect', function () {
+      phone.disconnect();
     });
 });

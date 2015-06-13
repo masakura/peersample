@@ -87,3 +87,19 @@ body {
     border-bottom: 0;
   }
 }
+
+#video-box {
+  position: relative;
+}
+
+#video {
+  position: absolute;
+  width: 20%;
+  border: azure solid 1px;
+  right: 10px;
+  bottom: 20px;
+}
+
+#other-video {
+  width: 100%;
+}
