@@ -24,12 +24,25 @@
     <div class="container">
       <video id="video" autoplay muted></video>
       <video id="other-video" autoplay></video>
-      <div class="input-group">
-        <input id="other-peerid" type="text" class="form-control">
-        <span class="input-group-btn">
-          <button id="call" type="button" class="btn btn-primary">Call</button>
-        </span>
+
+      <div id="call-box" style="display: none">
+        <div class="input-group">
+          <input id="other-peerid" type="text" class="form-control">
+          <span class="input-group-btn">
+            <button id="call" type="button" class="btn btn-primary">Call</button>
+          </span>
+        </div>
       </div>
+
+      <div id="catch-box" style="display: none">
+        <div class="input-group">
+          <input id="catch-other-peerid" type="text" class="form-control">
+          <span class="input-group-btn">
+            <button id="catch" type="button" class="btn btn-danger">Catch</button>
+          </span>
+        </div>
+      </div>
+
       <div id="messages"></div>
     </div>
 
