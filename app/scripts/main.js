@@ -75,7 +75,7 @@ $(document).ready(function () {
 
     return {
       start: function () {
-        navigator.getUserMedia({audio: false, video: true}, function (stream) {
+        navigator.getUserMedia({audio: true, video: true}, function (stream) {
           $('#video').prop('src', URL.createObjectURL(stream));
           myStream = stream;
         }, function (error) {
